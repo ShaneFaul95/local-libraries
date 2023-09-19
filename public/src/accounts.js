@@ -28,31 +28,16 @@ const sortAccountsByLastName = (accounts) => {
   return accounts;
 }
 
-// Create a function that takes in 2 args
-// - An account object.
-// - An array of all book objects.
-// Loop through each book in the array of books
-// Access the borrows property of each book
-// Loop through the borrows array of each book
-// Check if the id of the account matches the id in the borrow record
-// If there is a match, increment the totalBorrows counter
-// Return the final total of borrows for the account
 
-const getTotalNumberOfBorrows = (account, books) => {
-  let totalBorrows = 0;
-   
-  for (const bookIndex in books) {
-    const borrows = books[bookIndex].borrows;
 
-    for (const borrowIndex in borrows) {
-      if (borrows[borrowIndex].id === account.id) {
-        totalBorrows++;
-      }
-    }
-  }
-
-  return totalBorrows;
-}        
+function getTotalNumberOfBorrows(account, books) {
+  const accountId = account.id;
+  return books.reduce((totalBorrows, { borrows }) => {
+    if (borrows.some((record) => record.id === accountId)) totalBorrows++;
+    return totalBorrows;
+  }, 0);
+}
+     
 
 // Creat a function that takes in 3 args
 // - An account object.
